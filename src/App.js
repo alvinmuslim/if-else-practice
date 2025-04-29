@@ -1,124 +1,187 @@
+// App.js
 import React, { useState } from "react";
 import "./App.css";
 
 const exercises = [
   {
-    title: "Isian: Cek Umur",
-    prompt: "Isilah bagian kosong dengan syntax C++ yang tepat untuk menentukan apakah pengguna sudah remaja.",
-    codeParts: [
-      "int ", ";",
-      "cout << \"Masukkan umur: \";",
-      "", ">> umur;",
-      "if (", " 13) {",
-      "  cout << \"Kamu sudah remaja.\";",
-      "} else {",
-      "  cout << \"Kamu masih anak-anak.\";",
-      "}"
-    ],
-    blanks: ["umur", "cin", "umur >="]
+    title: "Age Check",
+    description: "Fill in the blanks to complete the age check program",
+    code: `int _____; 
+cout << "Masukkan umur: ";
+_____ >> umur; 
+if ( _______ 13 ) { 
+  cout << "Kamu sudah remaja.";
+} else {
+  cout << "Kamu masih anak-anak."; 
+}`,
+    blanks: [
+      { id: 1, answer: "umur", hint: "Variable declaration for age" },
+      { id: 2, answer: "cin", hint: "Input stream object" },
+      { id: 3, answer: "umur >=", hint: "Comparison operator for '13 or more'" }
+    ]
   },
   {
-    title: "Isian: Genap atau Ganjil",
-    prompt: "Lengkapi bagian kosong untuk menentukan apakah angka genap atau ganjil.",
-    codeParts: [
-      "int ", ";",
-      "cout << \"Masukkan angka: \";",
-      "cin ", " angka;",
-      "if (", ") {",
-      "  cout << \"Angka genap.\";",
-      "} else {",
-      "  cout << \"Angka ganjil\";",
-      "}"
-    ],
-    blanks: ["angka", ">>", "angka % 2 == 0"]
+    title: "Odd/Even Check",
+    description: "Complete the program to check if a number is odd or even",
+    code: `int ______; 
+cout << "Masukkan angka: ";
+cin _____ angka; 
+if ( _________ ) {
+  cout << "Angka genap.";
+} else {
+  cout << "Angka ganjil"; 
+}`,
+    blanks: [
+      { id: 4, answer: "angka", hint: "Variable declaration for number" },
+      { id: 5, answer: ">>", hint: "Input operator" },
+      { id: 6, answer: "angka % 2 == 0", hint: "Condition for even numbers" }
+    ]
   },
   {
-    title: "Isian: Jawaban Kuis",
-    prompt: "Lengkapi syntax berikut agar bisa mengecek jawaban ya/tidak dengan benar.",
-    codeParts: [
-      "", " jawab;",
-      "", " << \"Apakah bumi itu bulat? (y/n): \";",
-      "cin >> ", ";",
-      "if (jawab == 'y' ", " jawab == 'Y') {",
-      "  cout << \"Benar!\";",
-      "} else if (jawab == 'n' ", " jawab == 'N') {",
-      "  cout << \"Salah, coba lagi.\";",
-      "} else {",
-      "  cout << \"Jawaban tidak dikenali\";",
-      "}"
-    ],
-    blanks: ["char", "cout", "jawab", "||", "||"]
+    title: "Yes/No Question",
+    description: "Complete the yes/no question program",
+    code: `_____ jawab; 
+___ << "Apakah bumi itu bulat? (y/n): "; 
+cin >> ______; 
+if (jawab == 'y' ____ jawab == 'Y') { 
+  cout << "Benar!";
+} else if (jawab == 'n' ____ jawab == 'N') { 
+  cout << "Salah, coba lagi.";
+} else {
+  cout << "Jawaban tidak dikenali"; 
+}`,
+    blanks: [
+      { id: 7, answer: "char", hint: "Data type for single character" },
+      { id: 8, answer: "cout", hint: "Output stream object" },
+      { id: 9, answer: "jawab", hint: "Variable name for answer" },
+      { id: 10, answer: "||", hint: "Logical OR operator" },
+      { id: 11, answer: "||", hint: "Logical OR operator" }
+    ]
   }
 ];
 
 export default function IfElsePractice() {
-  const [current, setCurrent] = useState(0);
-  const [userInputs, setUserInputs] = useState([]);
+  const [currentExercise, setCurrentExercise] = useState(0);
+  const [userAnswers, setUserAnswers] = useState({});
+  const [results, setResults] = useState(null);
+  const [showHints, setShowHints] = useState(false);
+
+  const handleAnswerChange = (id, value) => {
+    setUserAnswers(prev => ({ ...prev, [id]: value }));
+  };
+
+  const checkAnswers = () => {
+    const currentBlanks = exercises[currentExercise].blanks;
+    const result = {};
+    let score = 0;
+
+    currentBlanks.forEach(blank => {
+      const isCorrect = userAnswers[blank.id]?.trim().toLowerCase() === blank.answer.toLowerCase();
+      result[blank.id] = isCorrect;
+      if (isCorrect) score++;
+    });
+
+    setResults(result);
+    setFeedback(`Score: ${score}/${currentBlanks.length} (${Math.round((score/currentBlanks.length)*100)}%)`);
+  };
+
   const [feedback, setFeedback] = useState("");
 
-  const handleInputChange = (value, index) => {
-    const newInputs = [...userInputs];
-    newInputs[index] = value;
-    setUserInputs(newInputs);
+  const resetExercise = () => {
+    setUserAnswers({});
+    setResults(null);
+    setFeedback("");
   };
 
-  const checkAnswer = () => {
-    const correctBlanks = exercises[current].blanks;
-    const score = correctBlanks.reduce((acc, correct, i) => {
-      return acc + (userInputs[i]?.trim().toLowerCase() === correct.trim().toLowerCase() ? 1 : 0);
-    }, 0);
-
-    setFeedback(`✅ Skor: ${score} dari ${correctBlanks.length}`);
+  const renderCodeWithInputs = () => {
+    const { code } = exercises[currentExercise];
+    const parts = code.split(/(_____+|____+|___+|______+)/g);
+    
+    return parts.map((part, index) => {
+      if (part.match(/_{3,}/)) {
+        const blankId = exercises[currentExercise].blanks[index/2]?.id;
+        return (
+          <input
+            key={index}
+            className={`inline-input ${results && results[blankId] !== undefined ? 
+              (results[blankId] ? 'correct' : 'incorrect') : ''}`}
+            value={userAnswers[blankId] || ""}
+            onChange={(e) => handleAnswerChange(blankId, e.target.value)}
+            placeholder="..."
+          />
+        );
+      }
+      return <span key={index}>{part}</span>;
+    });
   };
-
-  const currentExercise = exercises[current];
 
   return (
     <div className="container">
-      <h1 className="title">Latihan If-Else C++ (Isian)</h1>
+      <h1 className="title">C++ Fill-in-the-Blanks Practice</h1>
+      
       <div className="card">
-        <h2 className="subtitle">{currentExercise.title}</h2>
-        <p>{currentExercise.prompt}</p>
-        <pre className="code">
-          {currentExercise.codeParts.map((part, index) =>
-            index % 2 === 0 ? (
-              <div key={index}>{part}</div>
-            ) : (
-              <input
-                key={index}
-                className="inline-input futuristic"
-                placeholder="..."
-                value={userInputs[Math.floor(index / 2)] || ""}
-                onChange={(e) => handleInputChange(e.target.value, Math.floor(index / 2))}
-              />
-            )
-          )}
-        </pre>
-        <button onClick={checkAnswer} className="button primary">
-          Cek Jawaban
-        </button>
-        {feedback && <p className="feedback">{feedback}</p>}
+        <h2 className="subtitle">{exercises[currentExercise].title}</h2>
+        <p>{exercises[currentExercise].description}</p>
+        
+        <div className="code">
+          {renderCodeWithInputs()}
+        </div>
+        
+        <div className="controls">
+          <button onClick={checkAnswers} className="button primary">
+            Check Answers
+          </button>
+          <button 
+            onClick={() => setShowHints(!showHints)} 
+            className="button"
+          >
+            {showHints ? "Hide Hints" : "Show Hints"}
+          </button>
+          <button onClick={resetExercise} className="button">
+            Reset
+          </button>
+        </div>
+        
+        {showHints && (
+          <div className="hints">
+            <h3>Hints:</h3>
+            <ul>
+              {exercises[currentExercise].blanks.map(blank => (
+                <li key={blank.id}>
+                  <strong>Blank {blank.id}:</strong> {blank.hint}
+                </li>
+              ))}
+            </ul>
+          </div>
+        )}
+        
+        {feedback && (
+          <div className="feedback">
+            {feedback}
+          </div>
+        )}
       </div>
+      
       <div className="navigation">
         <button
           onClick={() => {
-            setCurrent((prev) => (prev > 0 ? prev - 1 : prev));
-            setUserInputs([]);
-            setFeedback("");
+            setCurrentExercise(prev => Math.max(0, prev - 1));
+            resetExercise();
           }}
+          disabled={currentExercise === 0}
           className="button"
         >
-          Sebelumnya
+          Previous
         </button>
         <button
           onClick={() => {
-            setCurrent((prev) => (prev < exercises.length - 1 ? prev + 1 : prev));
-            setUserInputs([]);
-            setFeedback("");
+            setCurrentExercise(prev => Math.min(exercises.length - 1, prev + 1));
+            resetExercise();
           }}
+          disabled={currentExercise === exercises.length - 1}
           className="button success"
         >
-          Selanjutnya
+          Next
         </button>
       </div>
     </div>

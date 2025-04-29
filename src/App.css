@@ -1,5 +1,4 @@
 /* App.css */
-
 body {
   margin: 0;
   font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
@@ -25,6 +24,7 @@ body {
   border-radius: 1rem;
   padding: 2rem;
   box-shadow: 0 0 15px rgba(0, 255, 224, 0.2);
+  margin-bottom: 2rem;
 }
 
 .subtitle {
@@ -35,11 +35,13 @@ body {
 
 .code {
   background: #121212;
-  padding: 1rem;
+  padding: 1.5rem;
   border-radius: 0.8rem;
   font-family: "Courier New", Courier, monospace;
-  white-space: pre-wrap;
-  margin-bottom: 1rem;
+  white-space: pre;
+  margin: 1.5rem 0;
+  line-height: 1.8;
+  overflow-x: auto;
 }
 
 .inline-input {
@@ -49,13 +51,18 @@ body {
   border-radius: 6px;
   padding: 4px 8px;
   margin: 0 4px;
-  width: 120px;
+  min-width: 80px;
+  font-family: "Courier New", Courier, monospace;
 }
 
-.futuristic {
-  border: 1px solid #00ffe0;
-  box-shadow: 0 0 8px #00ffe0;
-  background-color: #000;
+.inline-input.correct {
+  border-color: #00ff99;
+  background-color: rgba(0, 255, 153, 0.1);
+}
+
+.inline-input.incorrect {
+  border-color: #ff5555;
+  background-color: rgba(255, 85, 85, 0.1);
 }
 
 .button {
@@ -66,7 +73,7 @@ body {
   border-radius: 8px;
   cursor: pointer;
   margin: 0.5rem;
-  transition: background 0.3s ease;
+  transition: all 0.3s ease;
 }
 
 .button:hover {
@@ -82,14 +89,43 @@ body {
   background: #007bff;
 }
 
+.button:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.controls {
+  display: flex;
+  flex-wrap: wrap;
+  margin-top: 1.5rem;
+}
+
 .feedback {
   margin-top: 1rem;
-  font-weight: bold;
-  color: #00ff99;
+  padding: 1rem;
+  background: rgba(0, 191, 166, 0.1);
+  border-left: 4px solid #00bfa6;
+  border-radius: 4px;
+}
+
+.hints {
+  margin-top: 1.5rem;
+  padding: 1rem;
+  background: rgba(0, 119, 255, 0.1);
+  border-left: 4px solid #0077ff;
+  border-radius: 4px;
+}
+
+.hints ul {
+  padding-left: 1.5rem;
+}
+
+.hints li {
+  margin-bottom: 0.5rem;
 }
 
 .navigation {
   display: flex;
   justify-content: center;
-  margin-top: 1rem;
+  gap: 1rem;
 }
