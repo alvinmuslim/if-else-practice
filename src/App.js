@@ -4,77 +4,98 @@ import "./App.css";
 const exercises = [
   {
     title: "Cek Umur",
-    prompt: "Lengkapi kode untuk menentukan apakah pengguna sudah remaja.",
-    code: `int umur;\ncout << "Masukkan umur: ";\ncin >> umur;\nif (______) {\n  cout << "Kamu sudah remaja.";\n} else {\n  cout << "Kamu masih anak-anak.";}`,
-    answer: "umur >= 13"
+    prompt: "Lengkapi bagian kosong syntax berikut untuk menentukan apakah pengguna sudah remaja.",
+    codeParts: [
+      "int umur;",
+      "cout << \"Masukkan umur: \";",
+      "cin >> umur;",
+      "if (", ") {",
+      "  cout << \"Kamu sudah remaja.\";",
+      "} else {",
+      "  cout << \"Kamu masih anak-anak.\";",
+      "}"
+    ],
+    blanks: ["umur >= 13"],
   },
   {
     title: "Genap atau Ganjil",
-    prompt: "Lengkapi kode untuk menentukan apakah angka genap atau ganjil.",
-    code: `int angka;\ncout << "Masukkan angka: ";\ncin >> angka;\nif (angka % 2 == 0) {\n  cout << "Angka genap.";\n} else {\n  cout << "______";}`,
-    answer: "Angka ganjil."
+    prompt: "Isi bagian kosong untuk menentukan apakah angka genap atau ganjil.",
+    codeParts: [
+      "int angka;",
+      "cout << \"Masukkan angka: \";",
+      "cin >> angka;",
+      "if (", ") {",
+      "  cout << \"Angka genap.\";",
+      "} else {",
+      "  cout << \"", "\";",
+      "}"
+    ],
+    blanks: ["angka % 2 == 0", "Angka ganjil."],
   },
   {
     title: "Jawaban Kuis",
-    prompt: "Lengkapi kode untuk mengecek jawaban ya/tidak.",
-    code: `char jawab;\ncout << "Apakah bumi itu bulat? (y/n): ";\ncin >> jawab;\nif (jawab == 'y' || jawab == 'Y') {\n  cout << "Benar!";\n} else if (jawab == 'n' || jawab == 'N') {\n  cout << "Salah, coba lagi.";\n} else {\n  cout << "______";}`,
-    answer: "Jawaban tidak dikenali."
-  },
-  {
-    title: "Penilaian Nilai",
-    prompt: "Lengkapi kode untuk menilai angka menjadi huruf.",
-    code: `int nilai;\ncout << "Masukkan nilai: ";\ncin >> nilai;\nif (nilai >= 80) {\n  cout << "Nilai A";\n} else if (nilai >= 70) {\n  cout << "Nilai B";\n} else if (nilai >= 60) {\n  cout << "Nilai C";\n} else {\n  cout << "______";}`,
-    answer: "Nilai D"
-  },
-  {
-    title: "Cek Suhu",
-    prompt: "Lengkapi kode untuk mengecek kondisi suhu.",
-    code: `int suhu;\ncout << "Masukkan suhu (C): ";\ncin >> suhu;\nif (suhu < 20) {\n  cout << "Cuaca dingin";\n} else if (suhu <= 30) {\n  cout << "Cuaca normal";\n} else {\n  cout << "______";}`,
-    answer: "Cuaca panas"
+    prompt: "Lengkapi bagian kosong untuk mengecek jawaban ya/tidak.",
+    codeParts: [
+      "char jawab;",
+      "cout << \"Apakah bumi itu bulat? (y/n): \";",
+      "cin >> jawab;",
+      "if (jawab == 'y' || jawab == 'Y') {",
+      "  cout << \"Benar!\";",
+      "} else if (jawab == 'n' || jawab == 'N') {",
+      "  cout << \"Salah, coba lagi.\";",
+      "} else {",
+      "  cout << \"", "\";",
+      "}"
+    ],
+    blanks: ["Jawaban tidak dikenali."],
   }
 ];
 
 export default function IfElsePractice() {
   const [current, setCurrent] = useState(0);
-  const [userInput, setUserInput] = useState("");
+  const [userInputs, setUserInputs] = useState([]);
   const [feedback, setFeedback] = useState("");
 
-  const checkAnswer = () => {
-    const correct = exercises[current].answer.trim().toLowerCase();
-    const input = userInput.trim().toLowerCase();
-    setFeedback(input === correct ? "✅ Jawaban benar!" : "❌ Jawaban masih salah, coba lagi.");
+  const handleInputChange = (value, index) => {
+    const newInputs = [...userInputs];
+    newInputs[index] = value;
+    setUserInputs(newInputs);
   };
 
-  const updateCodeWithInput = (code) => {
-    // Ganti bagian "______" dengan input pengguna
-    return code.split("______").map((part, index) => {
-      if (index === 0) return part;
-      return (
-        <>
-          <input
-            type="text"
-            value={userInput}
-            onChange={(e) => setUserInput(e.target.value)}
-            placeholder="Isi jawaban..."
-            className="code-input"
-          />
-          {part}
-        </>
-      );
-    });
+  const checkAnswer = () => {
+    const correctBlanks = exercises[current].blanks;
+    const score = correctBlanks.reduce((acc, correct, i) => {
+      return acc + (userInputs[i]?.trim().toLowerCase() === correct.trim().toLowerCase() ? 1 : 0);
+    }, 0);
+
+    setFeedback(`✅ Skor: ${score} dari ${correctBlanks.length}`);
   };
+
+  const currentExercise = exercises[current];
 
   return (
     <div className="container">
-      <h1 className="title">Latihan If-Else C++</h1>
+      <h1 className="title">🎮 Latihan If-Else C++</h1>
       <div className="card">
-        <h2 className="subtitle">{exercises[current].title}</h2>
-        <p>{exercises[current].prompt}</p>
+        <h2 className="subtitle">📘 {currentExercise.title}</h2>
+        <p className="prompt">{currentExercise.prompt}</p>
         <pre className="code">
-          {updateCodeWithInput(exercises[current].code)}
+          {currentExercise.codeParts.map((part, index) =>
+            index % 2 === 0 ? (
+              <div key={index}>{part}</div>
+            ) : (
+              <input
+                key={index}
+                className="inline-input"
+                placeholder="..."
+                value={userInputs[Math.floor(index / 2)] || ""}
+                onChange={(e) => handleInputChange(e.target.value, Math.floor(index / 2))}
+              />
+            )
+          )}
         </pre>
         <button onClick={checkAnswer} className="button primary">
-          Cek Jawaban
+          ✔️ Cek Jawaban
         </button>
         {feedback && <p className="feedback">{feedback}</p>}
       </div>
@@ -82,22 +103,22 @@ export default function IfElsePractice() {
         <button
           onClick={() => {
             setCurrent((prev) => (prev > 0 ? prev - 1 : prev));
-            setUserInput("");
+            setUserInputs([]);
             setFeedback("");
           }}
           className="button"
         >
-          Sebelumnya
+          ⬅️ Sebelumnya
         </button>
         <button
           onClick={() => {
             setCurrent((prev) => (prev < exercises.length - 1 ? prev + 1 : prev));
-            setUserInput("");
+            setUserInputs([]);
             setFeedback("");
           }}
           className="button success"
         >
-          Selanjutnya
+          Selanjutnya ➡️
         </button>
       </div>
     </div>
