@@ -1,131 +1,217 @@
 /* App.css */
 body {
   margin: 0;
-  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
-  background: #0f0f0f;
-  color: #e0e0e0;
+  font-family: 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+  background: #0a0a0a;
+  color: #f0f0f0;
+  line-height: 1.6;
 }
 
 .container {
   padding: 2rem;
-  max-width: 800px;
-  margin: auto;
+  max-width: 780px;
+  margin: 0 auto;
 }
 
 .title {
-  font-size: 2rem;
+  font-size: 2.2rem;
   text-align: center;
-  margin-bottom: 1.5rem;
-  color: #00ffe0;
+  margin: 0 0 1.8rem;
+  color: #00e6d6;
+  font-weight: 600;
+  letter-spacing: -0.5px;
+  text-shadow: 0 0 8px rgba(0, 230, 214, 0.3);
 }
 
 .card {
-  background: #1a1a1a;
-  border-radius: 1rem;
-  padding: 2rem;
-  box-shadow: 0 0 15px rgba(0, 255, 224, 0.2);
-  margin-bottom: 2rem;
+  background: #151515;
+  border-radius: 12px;
+  padding: 2.2rem;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+  border: 1px solid #252525;
+  margin-bottom: 2.5rem;
 }
 
 .subtitle {
-  font-size: 1.4rem;
-  color: #00bfa6;
-  margin-bottom: 1rem;
+  font-size: 1.5rem;
+  color: #00ccb8;
+  margin: 0 0 1.2rem;
+  font-weight: 500;
 }
 
 .code {
-  background: #121212;
-  padding: 1.5rem;
-  border-radius: 0.8rem;
-  font-family: "Courier New", Courier, monospace;
+  background: #111;
+  padding: 1.6rem;
+  border-radius: 8px;
+  font-family: 'Fira Code', 'Courier New', monospace;
+  font-size: 0.95rem;
   white-space: pre;
-  margin: 1.5rem 0;
-  line-height: 1.8;
+  margin: 1.8rem 0;
+  line-height: 1.7;
   overflow-x: auto;
+  border: 1px solid #2a2a2a;
+  box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.5);
 }
 
 .inline-input {
-  background: #222;
-  color: #fff;
-  border: 1px solid #444;
-  border-radius: 6px;
-  padding: 4px 8px;
-  margin: 0 4px;
-  min-width: 80px;
-  font-family: "Courier New", Courier, monospace;
+  background: #1e1e1e;
+  color: #ffffff;
+  border: 1px solid #3a3a3a;
+  border-radius: 5px;
+  padding: 6px 10px;
+  margin: 0 3px;
+  min-width: 70px;
+  font-family: 'Fira Code', 'Courier New', monospace;
+  font-size: 0.9rem;
+  transition: all 0.2s ease;
+  vertical-align: middle;
+  outline: none;
+}
+
+.inline-input:focus {
+  border-color: #00ccb8;
+  box-shadow: 0 0 0 2px rgba(0, 204, 184, 0.2);
 }
 
 .inline-input.correct {
-  border-color: #00ff99;
-  background-color: rgba(0, 255, 153, 0.1);
+  border-color: #00c853;
+  background-color: rgba(0, 200, 83, 0.08);
 }
 
 .inline-input.incorrect {
-  border-color: #ff5555;
-  background-color: rgba(255, 85, 85, 0.1);
+  border-color: #ff5252;
+  background-color: rgba(255, 82, 82, 0.08);
 }
 
 .button {
-  padding: 0.5rem 1rem;
+  padding: 0.6rem 1.2rem;
   border: none;
-  background: #444;
+  background: #333;
   color: #fff;
-  border-radius: 8px;
+  border-radius: 6px;
   cursor: pointer;
-  margin: 0.5rem;
-  transition: all 0.3s ease;
+  margin: 0.4rem;
+  transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+  font-size: 0.95rem;
+  font-weight: 500;
+  letter-spacing: 0.3px;
 }
 
 .button:hover {
-  background: #00ffe0;
+  background: #00d9c6;
   color: #000;
+  transform: translateY(-1px);
+}
+
+.button:active {
+  transform: translateY(0);
 }
 
 .button.primary {
-  background: #00bfa6;
+  background: #00a896;
+}
+
+.button.primary:hover {
+  background: #00c2ad;
 }
 
 .button.success {
-  background: #007bff;
+  background: #0077ff;
+}
+
+.button.success:hover {
+  background: #0088ff;
 }
 
 .button:disabled {
   opacity: 0.5;
   cursor: not-allowed;
+  transform: none !important;
 }
 
 .controls {
   display: flex;
   flex-wrap: wrap;
-  margin-top: 1.5rem;
+  margin: 1.8rem -0.4rem 0;
+  justify-content: center;
 }
 
 .feedback {
-  margin-top: 1rem;
+  margin: 1.5rem 0 0;
   padding: 1rem;
-  background: rgba(0, 191, 166, 0.1);
-  border-left: 4px solid #00bfa6;
+  background: rgba(0, 168, 150, 0.1);
+  border-left: 3px solid #00a896;
   border-radius: 4px;
+  font-size: 0.95rem;
 }
 
 .hints {
-  margin-top: 1.5rem;
-  padding: 1rem;
-  background: rgba(0, 119, 255, 0.1);
-  border-left: 4px solid #0077ff;
+  margin: 1.8rem 0 0;
+  padding: 1.2rem;
+  background: rgba(0, 119, 255, 0.08);
+  border-left: 3px solid #0077ff;
   border-radius: 4px;
 }
 
+.hints h3 {
+  margin: 0 0 0.8rem;
+  font-size: 1.1rem;
+  color: #00a8ff;
+}
+
 .hints ul {
-  padding-left: 1.5rem;
+  padding-left: 1.2rem;
+  margin: 0;
 }
 
 .hints li {
-  margin-bottom: 0.5rem;
+  margin-bottom: 0.6rem;
+  font-size: 0.92rem;
 }
 
 .navigation {
   display: flex;
   justify-content: center;
-  gap: 1rem;
+  gap: 0.8rem;
+  margin-top: 1.5rem;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+  .container {
+    padding: 1.5rem;
+  }
+  
+  .card {
+    padding: 1.8rem;
+  }
+  
+  .code {
+    padding: 1.2rem;
+    font-size: 0.88rem;
+  }
+  
+  .inline-input {
+    min-width: 60px;
+    padding: 5px 8px;
+  }
+}
+
+/* Custom scrollbar */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: #1a1a1a;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #333;
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #444;
 }
