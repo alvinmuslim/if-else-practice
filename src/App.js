@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import "./App.css";
 
 const exercises = [
   {
@@ -75,73 +76,55 @@ export default function IfElsePractice() {
   const [current, setCurrent] = useState(0);
   const [userInput, setUserInput] = useState("");
   const [feedback, setFeedback] = useState("");
-  const [score, setScore] = useState(0);
-  const [isAnswered, setIsAnswered] = useState(false);
 
   const checkAnswer = () => {
     const correct = exercises[current].answer.trim().toLowerCase();
     const input = userInput.trim().toLowerCase();
-    const isCorrect = input === correct;
-    setFeedback(isCorrect ? "✅ Jawaban benar!" : "❌ Jawaban masih salah, coba lagi.");
-    if (isCorrect && !isAnswered) {
-      setScore(score + 1);
-      setIsAnswered(true);
-    }
-  };
-
-  const goTo = (index) => {
-    setCurrent(index);
-    setUserInput("");
-    setFeedback("");
-    setIsAnswered(false);
+    setFeedback(input === correct ? "✅ Jawaban benar!" : "❌ Jawaban masih salah, coba lagi.");
   };
 
   return (
-    <div className="p-6 max-w-4xl mx-auto font-sans text-gray-800">
-      <h1 className="text-3xl font-bold mb-6 text-center text-blue-700">Latihan If-Else C++</h1>
-
-      <div className="bg-white rounded-2xl shadow-lg p-6 mb-4 border border-blue-100">
-        <h2 className="text-xl font-semibold mb-2 text-blue-600">{exercises[current].title}</h2>
-        <p className="mb-3 italic">{exercises[current].prompt}</p>
-        <pre className="bg-gray-100 p-4 rounded text-sm whitespace-pre-wrap border border-gray-300">
+    <div className="container">
+      <h1 className="title">Latihan If-Else C++</h1>
+      <div className="card">
+        <h2 className="subtitle">{exercises[current].title}</h2>
+        <p>{exercises[current].prompt}</p>
+        <pre className="code">
           {exercises[current].code.replace(/______/g, userInput || "______")}
         </pre>
         <input
-          className="mt-4 w-full px-4 py-2 border rounded-xl border-blue-300 focus:outline-none focus:ring-2 focus:ring-blue-400"
+          className="input"
           placeholder="Tulis jawaban di sini..."
           value={userInput}
           onChange={(e) => setUserInput(e.target.value)}
         />
-        <button
-          onClick={checkAnswer}
-          className="mt-3 px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white rounded-xl shadow"
-        >
+        <button onClick={checkAnswer} className="button primary">
           Cek Jawaban
         </button>
-        {feedback && <p className="mt-3 text-lg font-semibold">{feedback}</p>}
+        {feedback && <p className="feedback">{feedback}</p>}
       </div>
-
-      <div className="flex justify-between items-center mb-6">
+      <div className="navigation">
         <button
-          onClick={() => goTo(current > 0 ? current - 1 : current)}
-          className="px-4 py-2 bg-gray-400 hover:bg-gray-500 text-white rounded-xl"
+          onClick={() => {
+            setCurrent((prev) => (prev > 0 ? prev - 1 : prev));
+            setUserInput("");
+            setFeedback("");
+          }}
+          className="button"
         >
-          ⬅️ Sebelumnya
+          Sebelumnya
         </button>
-        <span className="font-semibold">Soal {current + 1} dari {exercises.length}</span>
         <button
-          onClick={() => goTo(current < exercises.length - 1 ? current + 1 : current)}
-          className="px-4 py-2 bg-green-500 hover:bg-green-600 text-white rounded-xl"
+          onClick={() => {
+            setCurrent((prev) => (prev < exercises.length - 1 ? prev + 1 : prev));
+            setUserInput("");
+            setFeedback("");
+          }}
+          className="button success"
         >
-          Selanjutnya ➡️
+          Selanjutnya
         </button>
       </div>
-
-      {current === exercises.length - 1 && (
-        <div className="text-center text-xl font-bold text-purple-700">
-          🎉 Skor kamu: {score} dari {exercises.length}
-        </div>
-      )}
     </div>
   );
 }
