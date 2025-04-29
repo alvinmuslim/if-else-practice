@@ -3,51 +3,51 @@ import "./App.css";
 
 const exercises = [
   {
-    title: "Cek Umur",
-    prompt: "Lengkapi bagian kosong syntax berikut untuk menentukan apakah pengguna sudah remaja.",
+    title: "Isian: Cek Umur",
+    prompt: "Isilah bagian kosong dengan syntax C++ yang tepat untuk menentukan apakah pengguna sudah remaja.",
     codeParts: [
-      "int umur;",
+      "int ", ";",
       "cout << \"Masukkan umur: \";",
-      "cin >> umur;",
-      "if (", ") {",
+      "", ">> umur;",
+      "if (", " 13) {",
       "  cout << \"Kamu sudah remaja.\";",
       "} else {",
       "  cout << \"Kamu masih anak-anak.\";",
       "}"
     ],
-    blanks: ["umur >= 13"],
+    blanks: ["umur", "cin", "umur >="]
   },
   {
-    title: "Genap atau Ganjil",
-    prompt: "Isi bagian kosong untuk menentukan apakah angka genap atau ganjil.",
+    title: "Isian: Genap atau Ganjil",
+    prompt: "Lengkapi bagian kosong untuk menentukan apakah angka genap atau ganjil.",
     codeParts: [
-      "int angka;",
+      "int ", ";",
       "cout << \"Masukkan angka: \";",
-      "cin >> angka;",
+      "cin ", " angka;",
       "if (", ") {",
       "  cout << \"Angka genap.\";",
       "} else {",
-      "  cout << \"", "\";",
+      "  cout << \"Angka ganjil\";",
       "}"
     ],
-    blanks: ["angka % 2 == 0", "Angka ganjil."],
+    blanks: ["angka", ">>", "angka % 2 == 0"]
   },
   {
-    title: "Jawaban Kuis",
-    prompt: "Lengkapi bagian kosong untuk mengecek jawaban ya/tidak.",
+    title: "Isian: Jawaban Kuis",
+    prompt: "Lengkapi syntax berikut agar bisa mengecek jawaban ya/tidak dengan benar.",
     codeParts: [
-      "char jawab;",
-      "cout << \"Apakah bumi itu bulat? (y/n): \";",
-      "cin >> jawab;",
-      "if (jawab == 'y' || jawab == 'Y') {",
+      "", " jawab;",
+      "", " << \"Apakah bumi itu bulat? (y/n): \";",
+      "cin >> ", ";",
+      "if (jawab == 'y' ", " jawab == 'Y') {",
       "  cout << \"Benar!\";",
-      "} else if (jawab == 'n' || jawab == 'N') {",
+      "} else if (jawab == 'n' ", " jawab == 'N') {",
       "  cout << \"Salah, coba lagi.\";",
       "} else {",
-      "  cout << \"", "\";",
+      "  cout << \"Jawaban tidak dikenali\";",
       "}"
     ],
-    blanks: ["Jawaban tidak dikenali."],
+    blanks: ["char", "cout", "jawab", "||", "||"]
   }
 ];
 
@@ -75,10 +75,10 @@ export default function IfElsePractice() {
 
   return (
     <div className="container">
-      <h1 className="title">🎮 Latihan If-Else C++</h1>
+      <h1 className="title">Latihan If-Else C++ (Isian)</h1>
       <div className="card">
-        <h2 className="subtitle">📘 {currentExercise.title}</h2>
-        <p className="prompt">{currentExercise.prompt}</p>
+        <h2 className="subtitle">{currentExercise.title}</h2>
+        <p>{currentExercise.prompt}</p>
         <pre className="code">
           {currentExercise.codeParts.map((part, index) =>
             index % 2 === 0 ? (
@@ -86,7 +86,7 @@ export default function IfElsePractice() {
             ) : (
               <input
                 key={index}
-                className="inline-input"
+                className="inline-input futuristic"
                 placeholder="..."
                 value={userInputs[Math.floor(index / 2)] || ""}
                 onChange={(e) => handleInputChange(e.target.value, Math.floor(index / 2))}
@@ -95,7 +95,7 @@ export default function IfElsePractice() {
           )}
         </pre>
         <button onClick={checkAnswer} className="button primary">
-          ✔️ Cek Jawaban
+          Cek Jawaban
         </button>
         {feedback && <p className="feedback">{feedback}</p>}
       </div>
@@ -108,7 +108,7 @@ export default function IfElsePractice() {
           }}
           className="button"
         >
-          ⬅️ Sebelumnya
+          Sebelumnya
         </button>
         <button
           onClick={() => {
@@ -118,7 +118,7 @@ export default function IfElsePractice() {
           }}
           className="button success"
         >
-          Selanjutnya ➡️
+          Selanjutnya
         </button>
       </div>
     </div>
