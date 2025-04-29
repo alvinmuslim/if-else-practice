@@ -67,7 +67,11 @@ export default function IfElsePractice() {
   const [showHints, setShowHints] = useState(false);
 
   const handleAnswerChange = (id, value) => {
-    setUserAnswers(prev => ({ ...prev, [id]: value }));
+    setUserAnswers(prev => {
+      const newAnswers = {...prev};
+      newAnswers[id] = value;
+      return newAnswers;
+    });
   };
 
   const checkAnswers = () => {
@@ -93,27 +97,35 @@ export default function IfElsePractice() {
     setFeedback("");
   };
 
-  const renderCodeWithInputs = () => {
-    const { code } = exercises[currentExercise];
-    const parts = code.split(/(_____+|____+|___+|______+)/g);
-    
-    return parts.map((part, index) => {
-      if (part.match(/_{3,}/)) {
-        const blankId = exercises[currentExercise].blanks[index/2]?.id;
-        return (
+  // In your App.js, modify the renderCodeWithInputs function:
+
+// In your App.js, modify the renderCodeWithInputs function:
+
+const renderCodeWithInputs = () => {
+  const { code } = exercises[currentExercise];
+  const blankRegex = /_{3,}/g;
+  let blankIndex = 0;
+  
+  return code.split(blankRegex).map((part, index) => {
+    if (index > 0) {
+      const blankId = exercises[currentExercise].blanks[blankIndex]?.id;
+      blankIndex++;
+      return (
+        <React.Fragment key={`input-${index}`}>
           <input
-            key={index}
             className={`inline-input ${results && results[blankId] !== undefined ? 
               (results[blankId] ? 'correct' : 'incorrect') : ''}`}
             value={userAnswers[blankId] || ""}
             onChange={(e) => handleAnswerChange(blankId, e.target.value)}
             placeholder="..."
           />
-        );
-      }
-      return <span key={index}>{part}</span>;
-    });
-  };
+          {part}
+        </React.Fragment>
+      );
+    }
+    return <span key={`text-${index}`}>{part}</span>;
+  });
+};
 
   return (
     <div className="container">
