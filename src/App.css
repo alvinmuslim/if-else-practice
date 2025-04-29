@@ -31,12 +31,15 @@
     word-wrap: break-word;
   }
   
+  /* App.css */
   .code-input {
     border: 1px solid #ccc;
     padding: 5px;
     margin: 5px 0;
-    width: 50%;
+    width: 120px; /* Lebar input disesuaikan */
+    text-align: center;
   }
+  
   
   .button {
     padding: 10px 20px;

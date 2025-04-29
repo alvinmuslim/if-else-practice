@@ -45,6 +45,25 @@ export default function IfElsePractice() {
     setFeedback(input === correct ? "✅ Jawaban benar!" : "❌ Jawaban masih salah, coba lagi.");
   };
 
+  const updateCodeWithInput = (code) => {
+    // Ganti bagian "______" dengan input pengguna
+    return code.split("______").map((part, index) => {
+      if (index === 0) return part;
+      return (
+        <>
+          <input
+            type="text"
+            value={userInput}
+            onChange={(e) => setUserInput(e.target.value)}
+            placeholder="Isi jawaban..."
+            className="code-input"
+          />
+          {part}
+        </>
+      );
+    });
+  };
+
   return (
     <div className="container">
       <h1 className="title">Latihan If-Else C++</h1>
@@ -52,21 +71,7 @@ export default function IfElsePractice() {
         <h2 className="subtitle">{exercises[current].title}</h2>
         <p>{exercises[current].prompt}</p>
         <pre className="code">
-          {exercises[current].code.split("\n").map((line, index) => (
-            <div key={index}>
-              {line.includes("______") ? (
-                <input
-                  type="text"
-                  placeholder="Isi bagian ini..."
-                  value={userInput}
-                  onChange={(e) => setUserInput(e.target.value)}
-                  className="code-input"
-                />
-              ) : (
-                <span>{line}</span>
-              )}
-            </div>
-          ))}
+          {updateCodeWithInput(exercises[current].code)}
         </pre>
         <button onClick={checkAnswer} className="button primary">
           Cek Jawaban
