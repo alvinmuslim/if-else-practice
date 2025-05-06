@@ -15,9 +15,9 @@ if ( _______ 13 ) {
   cout << "Kamu masih anak-anak."; 
 }`,
     blanks: [
-      { id: 1, answer: "umur", hint: "Variable declaration for age" },
-      { id: 2, answer: "cin", hint: "Input stream object" },
-      { id: 3, answer: "umur >=", hint: "Comparison operator for '13 or more'" }
+      { id: 1, answers: ["umur"], hint: "Variable declaration for age" },
+      { id: 2, answers: ["cin"], hint: "Input stream object" },
+      { id: 3, answers: ["umur >=", "umur>="], hint: "Comparison operator for '13 or more'" }
     ]
   },
   {
@@ -32,9 +32,9 @@ if ( _________ ) {
   cout << "Angka ganjil"; 
 }`,
     blanks: [
-      { id: 4, answer: "angka", hint: "Variable declaration for number" },
-      { id: 5, answer: ">>", hint: "Input operator" },
-      { id: 6, answer: "angka % 2 == 0", hint: "Condition for even numbers" }
+      { id: 4, answers: ["angka"], hint: "Variable declaration for number" },
+      { id: 5, answers: [">>"], hint: "Input operator" },
+      { id: 6, answers: ["angka % 2 == 0", "angka%2==0"], hint: "Condition for even numbers" }
     ]
   },
   {
@@ -51,11 +51,11 @@ if (jawab == 'y' ____ jawab == 'Y') {
   cout << "Jawaban tidak dikenali"; 
 }`,
     blanks: [
-      { id: 7, answer: "char", hint: "Data type for single character" },
-      { id: 8, answer: "cout", hint: "Output stream object" },
-      { id: 9, answer: "jawab", hint: "Variable name for answer" },
-      { id: 10, answer: "||", hint: "Logical OR operator" },
-      { id: 11, answer: "||", hint: "Logical OR operator" }
+      { id: 7, answers: ["char"], hint: "Data type for single character" },
+      { id: 8, answers: ["cout"], hint: "Output stream object" },
+      { id: 9, answers: ["jawab"], hint: "Variable name for answer" },
+      { id: 10, answers: ["||"], hint: "Logical OR operator" },
+      { id: 11, answers: ["||"], hint: "Logical OR operator" }
     ]
   }
 ];
@@ -74,13 +74,14 @@ export default function IfElsePractice() {
     });
   };
 
-  const checkAnswers = () => {
+const checkAnswers = () => {
     const currentBlanks = exercises[currentExercise].blanks;
     const result = {};
     let score = 0;
 
     currentBlanks.forEach(blank => {
-      const isCorrect = userAnswers[blank.id]?.trim().toLowerCase() === blank.answer.toLowerCase();
+      const userAnswer = userAnswers[blank.id]?.replace(/\s+/g, '').toLowerCase() || '';
+      const isCorrect = blank.answers.some(ans => ans.replace(/\s+/g, '').toLowerCase() === userAnswer);
       result[blank.id] = isCorrect;
       if (isCorrect) score++;
     });
