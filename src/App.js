@@ -57,6 +57,102 @@ if (jawab == 'y' ____ jawab == 'Y') {
       { id: 10, answers: ["||"], hint: "Logical OR operator" },
       { id: 11, answers: ["||"], hint: "Logical OR operator" }
     ]
+  },
+  {
+    title: "Temperature Check",
+    description: "Complete the program to check if temperature is above freezing",
+    code: `int temp; 
+cout << "Enter temperature: ";
+cin >> temp; 
+if (temp _____ 0) { 
+  cout << "Above freezing point."; 
+} else { 
+  cout << "Freezing or below."; 
+}`,
+    blanks: [
+      { id: 12, answers: [">"], hint: "Comparison operator for greater than" }
+    ]
+  },
+  {
+    title: "Grade Check",
+    description: "Complete the program to check if grade is passing",
+    code: `int grade; 
+cout << "Enter grade: ";
+cin >> grade; 
+if (grade _____ 60) { 
+  cout << "Pass"; 
+} else { 
+  cout << "Fail"; 
+}`,
+    blanks: [
+      { id: 13, answers: [">="], hint: "Comparison operator for passing grade" }
+    ]
+  },
+  {
+    title: "Number Sign Check",
+    description: "Complete the program to check if number is positive, negative or zero",
+    code: `int num; 
+cout << "Enter number: ";
+cin >> num; 
+if (num _____ 0) { 
+  cout << "Positive"; 
+} else if (num _____ 0) { 
+  cout << "Negative"; 
+} else { 
+  cout << "Zero"; 
+}`,
+    blanks: [
+      { id: 14, answers: [">"], hint: "Comparison operator for positive" },
+      { id: 15, answers: ["<"], hint: "Comparison operator for negative" }
+    ]
+  },
+  {
+    title: "Leap Year Check",
+    description: "Complete the program to check if a year is a leap year",
+    code: `int year; 
+cout << "Enter year: ";
+cin >> year; 
+if ((year % 4 == 0 && year % 100 != 0) _____ (year % 400 == 0)) { 
+  cout << "Leap year"; 
+} else { 
+  cout << "Not a leap year"; 
+}`,
+    blanks: [
+      { id: 16, answers: ["||"], hint: "Logical OR operator" }
+    ]
+  },
+  {
+    title: "Divisible by 3 Check",
+    description: "Complete the program to check if a number is divisible by 3",
+    code: `int num; 
+cout << "Enter number: ";
+cin >> num; 
+if (num % 3 _____ 0) { 
+  cout << "Divisible by 3"; 
+} else { 
+  cout << "Not divisible by 3"; 
+}`,
+    blanks: [
+      { id: 17, answers: ["=="], hint: "Equality operator" }
+    ]
+  },
+  {
+    title: "Vowel Check",
+    description: "Complete the program to check if a character is a vowel",
+    code: `char ch; 
+cout << "Enter a character: ";
+cin >> ch; 
+if (ch == 'a' _____ ch == 'e' _____ ch == 'i' _____ ch == 'o' _____ ch == 'u') { 
+  cout << "Vowel"; 
+} else { 
+  cout << "Not a vowel"; 
+}`,
+    blanks: [
+      { id: 18, answers: ["||"], hint: "Logical OR operator" },
+      { id: 19, answers: ["||"], hint: "Logical OR operator" },
+      { id: 20, answers: ["||"], hint: "Logical OR operator" },
+      { id: 21, answers: ["||"], hint: "Logical OR operator" }
+    ]
   }
 ];
 
